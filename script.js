@@ -1,23 +1,23 @@
 'use strict';
 const p = (str) => console.log(str);
-const ROOT = document.querySelector('#root');
+const root = document.querySelector('#root');
 
 class Library {
     constructor () {
         this.booklist = [];
-        this.DOMreferece = document.createElement('div');
+        this.buildLibraryWidget();
     }
 
     buildLibraryWidget () {
+        this.DOMreferece = document.createElement('div');
         this.DOMreferece.classList.add('library');
-        for (const elem of this.booklist) {
-            // elem.buildBookWidget();
-            p(elem);
-        }
+        root.appendChild(this.DOMreferece);
     }
 
     addBook (book) {
-        this.booklist.push(book)
+        this.booklist.push(book);
+        p(book);
+        this.DOMreferece.appendChild(book.DOMreference);
     }
     
     getBooklist () {
@@ -48,24 +48,17 @@ class Book {
         this.DOMreference = document.createElement('div');
         this.DOMreference.classList.add('book');
 
-        const configureDOMelement = function (tag, content, parent) {
-            const elem = document.createElement(tag);
-            elem.textContent = content;
-            parent.appendChild(elem);
-        };
         
-        [
-            this.title,
-            this.author,
-            this.pages,
-            this.hasRead
-        ].forEach((property) => {
-            configureDOMelement('p', property, this.DOMreference)
-        });
     }
 }
 
 const theHobbit = new Book ('The Hobbit', 'J.R.R. Tolkien', 295, false);
+const bob = new Book ('The Hobbit', 'J.R.R. Tolkien', 295, false);
+const dob = new Book ('The Hobbit', 'J.R.R. Tolkien', 295, false);
+const cob = new Book ('The Hobbit', 'J.R.R. Tolkien', 295, false);
 const myLibrary = new Library ();
 myLibrary.addBook(theHobbit);
+myLibrary.addBook(bob);
+myLibrary.addBook(dob);
+myLibrary.addBook(cob);
 myLibrary.buildLibraryWidget();

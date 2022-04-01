@@ -4,9 +4,14 @@
     box-sizing: border-box;
 }
 
+:root {
+    font-size: 32px;
+}
+
 .library {
-    box-shadow: 0 0 10px 0;
+    margin: 20px;
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     background-color: antiquewhite;
 }
@@ -15,5 +20,5 @@
     height: 200px;
     width: 200px;
     margin: 10px;
-    border: 1px solid;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,.4);
 }
