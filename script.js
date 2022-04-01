@@ -40,6 +40,7 @@ function addBookModal (library, callback) {
     hasReadInput.setAttribute('type', 'checkbox');
     hasReadInput.name = "hasRead";
     hasReadInput.id = "hasReadInput";
+    hasReadInput.value = true;
 
     const hasReadLabel = newEl('label', hasReadArea);
     hasReadLabel.textContent = 'Have you read it?';
@@ -53,10 +54,9 @@ function addBookModal (library, callback) {
             titleInput.value,
             authorInput.value,
             pagesInput.value,
-            hasReadInput.value === "on"
-            ? true
-            : false
+            hasReadInput.checked
         )
+        p(hasReadInput.checked)
         library.addBook(book);
         callback();        
         root.removeChild(container);
@@ -148,10 +148,10 @@ class Book {
     }
 }
 
-const theHobbit = new Book ('The Hobbit', 'J.R.R. Tolkien', 295, false);
-const bob = new Book ('The Zobbit', 'J.R.R. Tolkien', 295, false);
-const dob = new Book ('The Ploobbit', 'J.R.R. Tolkien', 295, false);
-const cob = new Book ('The Rabbit', 'J.R.R. Tolkien', 295, false);
+const theHobbit = new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false);
+const bob = new Book ('O Jogo de Tronos', 'G.R.R. Martin', 800, true);
+const dob = new Book ('O Alienista', 'Machado de Assis', 200, true);
+const cob = new Book ('Crônicas de Narnia', 'C.S. Lewis', 400, true);
 const myLibrary = new Library ();
 myLibrary.addBook(theHobbit);
 myLibrary.addBook(bob);
