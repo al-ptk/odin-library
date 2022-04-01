@@ -31,7 +31,7 @@ button.addBook {
     width: 10ch;
 }
 
-form.addBookModal {
+.addBookModal {
     position: fixed;
     top: 10%;
     left: 10%;
@@ -39,4 +39,20 @@ form.addBookModal {
     height: 80%;
     background-color: rgb(231, 224, 214);
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.addBookModal input {
+    margin-bottom: 20px;
+}
+
+input#hasReadInput {
+    margin-right: 10px;
+}
+
+button#submitBookButton {
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
 }

@@ -5,14 +5,13 @@ const newEl = (tag, parent) => {
 };
 const root = document.querySelector('#root');
 
-function addBookModal (e) {
-    p('hey');
-    const container = document.createElement('form');
+function addBookModal (library, callback) {
+    const container = newEl ('div', root);
     container.classList.add('addBookModal');
 
     //The repetition below is me not wanting to create a mini-framework
     const titleLabel = newEl('label', container);
-    titleLabel.textContent = "Title: \n"
+    titleLabel.textContent = "Title:"
     titleLabel.setAttribute('for', 'titleInput');
     
     const titleInput = newEl('input', container);
@@ -20,15 +19,48 @@ function addBookModal (e) {
     titleInput.id = 'titleInput';    
 
     const authorLabel = newEl('label', container);
-    authorLabel.textContent = "Author: \n";
+    authorLabel.textContent = "Author:";
     authorLabel.setAttribute('for', 'authorInput');
 
     const authorInput = newEl('input', container);
     authorInput.name = 'author';
     authorInput.id = 'authorInput';
 
+    const pagesLabel = newEl('label', container);
+    pagesLabel.textContent = 'Total of pages:';
+    pagesLabel.setAttribute('for', 'pagesInput');
 
-    root.appendChild(container);
+    const pagesInput = newEl('input', container);
+    pagesInput.name = 'pages';
+    pagesInput.id = 'pagesInput';
+
+    const hasReadArea = newEl ('div', container);
+
+    const hasReadInput = newEl ('input', hasReadArea);
+    hasReadInput.setAttribute('type', 'checkbox');
+    hasReadInput.name = "hasRead";
+    hasReadInput.id = "hasReadInput";
+
+    const hasReadLabel = newEl('label', hasReadArea);
+    hasReadLabel.textContent = 'Have you read it?';
+    hasReadLabel.setAttribute('for', 'hasReadInput');
+
+    const submitBookButton = newEl('button', container);
+    submitBookButton.textContent = "Add New Book";
+    submitBookButton.id = 'submitBookButton';
+    submitBookButton.addEventListener('click', e => {
+        const book = new Book (
+            titleInput.value,
+            authorInput.value,
+            pagesInput.value,
+            hasReadInput.value === "on"
+            ? true
+            : false
+        )
+        library.addBook(book);
+        callback();        
+        root.removeChild(container);
+    });
 };
 
 class Library {
@@ -45,8 +77,9 @@ class Library {
         addButton.classList.add('addBook');
         addButton.textContent = 'Add Book';
         addButton.addEventListener('click', (e) => {
-            addBookModal();
             e.target.style.display = 'none';
+            const showButton = () => e.target.style.display = 'block';
+            addBookModal (this, showButton);
         });
 
         root.appendChild(this.DOMreferece);
