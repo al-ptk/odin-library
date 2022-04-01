@@ -1,26 +1,27 @@
 'use strict';
 const p = (str) => console.log(str);
+const ROOT = document.querySelector('#root');
 
-const myLibrary = {
-    booklist: [],
-    DOMreference: buildLibraryWidget(),
+class Library {
+    constructor () {
+        this.booklist = [];
+        this.DOMreferece = document.createElement('div');
+    }
 
-    buildLibraryWidget: function () {
-        elem = document.createElement('div');
-        elem.classList.add('library');
-        document.getElementsByTagName('body').appendChild(elem);
-    },
+    buildLibraryWidget () {
+        this.DOMreferece.classList.add('library');
+        for (const elem of this.booklist) {
+            // elem.buildBookWidget();
+            p(elem);
+        }
+    }
 
-    addBook: function (book) {
+    addBook (book) {
         this.booklist.push(book)
-    },
+    }
     
-    getBooklist: function () {
+    getBooklist () {
         return this.booklist;
-    },
-    
-    render: function () {
-
     }
 }
 
@@ -30,7 +31,7 @@ class Book {
         this.author = author;
         this.pages = pages;
         this.hasRead = hasRead;
-        this.DOMreference;
+        this.buildBookWidget();
     }
 
     getReadStatus () {
@@ -43,10 +44,15 @@ class Book {
         return `${this.title} by ${this.author}, ${this.pages} pages, ${this.getReadStatus()}.`
     }
 
-    /* Building the Book Widget uses private data, so it goes here, instead of the myLybrary object, which manages books. However! Where is the DOM element reference stored? The reference should stay within the object, but accessed by myLibrary when doing the rendering of all books.*/
     buildBookWidget () {
         this.DOMreference = document.createElement('div');
         this.DOMreference.classList.add('book');
+
+        const configureDOMelement = function (tag, content, parent) {
+            const elem = document.createElement(tag);
+            elem.textContent = content;
+            parent.appendChild(elem);
+        };
         
         [
             this.title,
@@ -59,11 +65,7 @@ class Book {
     }
 }
 
-function configureDOMelement (tag, content, parent) {
-    const elem = document.createElement(tag);
-    elem.textContent = content;
-    parent.appendChild(elem);
-}
-
 const theHobbit = new Book ('The Hobbit', 'J.R.R. Tolkien', 295, false);
+const myLibrary = new Library ();
 myLibrary.addBook(theHobbit);
+myLibrary.buildLibraryWidget();
