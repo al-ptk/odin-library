@@ -66,6 +66,4 @@ function configureDOMelement (tag, content, parent) {
 }
 
 const theHobbit = new Book ('The Hobbit', 'J.R.R. Tolkien', 295, false);
-p(theHobbit.info());
 myLibrary.addBook(theHobbit);
-p(myLibrary.getBooklist());

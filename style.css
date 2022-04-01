@@ -5,10 +5,14 @@
 }
 
 .library {
-    height: 200px;
     box-shadow: 0 0 10px 0;
+    display: flex;
+    gap: 10px;
 }
 
 .book {
-    
+    height: 200px;
+    width: 200px;
+    margin: 10px;
+    border: 1px solid;
 }
