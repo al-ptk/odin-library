@@ -3,11 +3,24 @@ const p = (str) => console.log(str);
 
 const myLibrary = {
     booklist: [],
+    DOMreference: buildLibraryWidget(),
+
+    buildLibraryWidget: function () {
+        elem = document.createElement('div');
+        elem.classList.add('library');
+        document.getElementsByTagName('body').appendChild(elem);
+    },
+
     addBook: function (book) {
         this.booklist.push(book)
     },
+    
     getBooklist: function () {
         return this.booklist;
+    },
+    
+    render: function () {
+
     }
 }
 
