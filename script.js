@@ -38,9 +38,14 @@ class Library {
     }
 
     removeBook (bookId) {
-        const bookReference = this.booklist[bookId].DOMreference
-        this.DOMreference.removeChild(bookReference);
-        this.booklist.splice(bookId, 1);
+        for (let i = 0; i < this.booklist.length; i++) {
+            const currBook = this.booklist[i];
+            if (currBook.bookId === bookId) {
+                const bookReference = currBook.DOMreference;
+                this.DOMreference.removeChild(bookReference);
+                this.booklist.splice(i, 1);
+            }
+        }
     }
     
     getBooklist () {
