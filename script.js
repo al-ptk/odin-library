@@ -1,17 +1,5 @@
 'use strict';
 
-function Main ()
-{    
-    var root = document.querySelector('#root');
-    const myLibrary = new Library ();
-    [
-        new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false),
-        new Book ('O Jogo de Tronos', 'G.R.R. Martin', 800, true),
-        new Book ('O Alienista', 'Machado de Assis', 200, true),
-        new Book ('Crônicas de Narnia', 'C.S. Lewis', 400, true)
-    ].forEach(elem => myLibrary.addBook(elem))
-}
-
 function p(str) {
     return console.log(str);
 }
@@ -49,7 +37,7 @@ class Library {
         this.DOMreference.appendChild(book.DOMreference);
     }
 
-    removeChild (bookId) {
+    removeBook (bookId) {
         const bookReference = this.booklist[bookId].DOMreference
         this.DOMreference.removeChild(bookReference);
         this.booklist.splice(bookId, 1);
@@ -66,6 +54,8 @@ class Book {
         this.author = author;
         this.pages = pages;
         this.hasRead = hasRead;
+        this.parent = undefined;
+        this.bookId = undefined;
         this.buildBookWidget();
     }
 
@@ -90,10 +80,15 @@ class Book {
         thumbnail.setAttribute('type', 'image/svg+xml')
         thumbnail.setAttribute('data', './book-pictogram.svg')
 
-        // thumbnail.style.fill = pickRandomColor();
-
         const bookInfo = newEl ('div', this.DOMreference);
         bookInfo.classList.add('bookInfo');
+
+        const deleteButton = newEl ('button', bookInfo);
+        deleteButton.textContent = 'X';
+        deleteButton.classList.add('deleteButton');
+        deleteButton.addEventListener ('click', e => {
+            this.parent.removeBook(this.bookId);
+        })
 
         const title = newEl('p', bookInfo);
         const titleProperty = newEl('span', title);
@@ -230,4 +225,13 @@ function deleteModal () {
 
 }
 
-Main();
+
+
+var root = document.querySelector('#root');
+const myLibrary = new Library ();
+[
+    new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false),
+    new Book ('O Jogo de Tronos', 'G.R.R. Martin', 800, true),
+    new Book ('O Alienista', 'Machado de Assis', 200, true),
+    new Book ('Crônicas de Narnia', 'C.S. Lewis', 400, true)
+].forEach(elem => myLibrary.addBook(elem))
