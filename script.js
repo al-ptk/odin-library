@@ -27,10 +27,10 @@ class Library {
     }
 
     buildLibraryWidget () {
-        this.DOMreferece = document.createElement('div');
-        this.DOMreferece.classList.add('library');
+        this.DOMreference = document.createElement('div');
+        this.DOMreference.classList.add('library');
 
-        const addButton = newEl('button', this.DOMreferece);
+        const addButton = newEl('button', this.DOMreference);
         addButton.classList.add('addBook');
         addButton.textContent = 'Add Book';
         addButton.addEventListener('click', (e) => {
@@ -39,12 +39,20 @@ class Library {
             addBookModal (this, showButton);
         });
 
-        root.appendChild(this.DOMreferece);
+        root.appendChild(this.DOMreference);
     }
 
     addBook (book) {
+        book.bookId = this.booklist.length;
+        book.parent = this;
         this.booklist.push(book);
-        this.DOMreferece.appendChild(book.DOMreference);
+        this.DOMreference.appendChild(book.DOMreference);
+    }
+
+    removeChild (bookId) {
+        const bookReference = this.booklist[bookId].DOMreference
+        this.DOMreference.removeChild(bookReference);
+        this.booklist.splice(bookId, 1);
     }
     
     getBooklist () {
