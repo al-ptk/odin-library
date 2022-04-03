@@ -1,9 +1,24 @@
 'use strict';
-const p = (str) => console.log(str);
+
+function Main ()
+{    
+    var root = document.querySelector('#root');
+    const myLibrary = new Library ();
+    [
+        new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false),
+        new Book ('O Jogo de Tronos', 'G.R.R. Martin', 800, true),
+        new Book ('O Alienista', 'Machado de Assis', 200, true),
+        new Book ('Crônicas de Narnia', 'C.S. Lewis', 400, true)
+    ].forEach(elem => myLibrary.addBook(elem))
+}
+
+function p(str) {
+    return console.log(str);
+}
+
 function newEl(tag, parent) {
     return parent.appendChild(document.createElement(tag));
-}
-const root = document.querySelector('#root');
+}  
 
 function addBookModal (library, callback) {
     const container = newEl ('div', root);
@@ -185,11 +200,4 @@ class Book {
     }
 }
 
-
-const myLibrary = new Library ();
-[
-    new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false),
-    new Book ('O Jogo de Tronos', 'G.R.R. Martin', 800, true),
-    new Book ('O Alienista', 'Machado de Assis', 200, true),
-    new Book ('Crônicas de Narnia', 'C.S. Lewis', 400, true)
-].forEach(elem => myLibrary.addBook(elem))
+Main();
