@@ -1,8 +1,8 @@
 'use strict';
 const p = (str) => console.log(str);
-const newEl = (tag, parent) => {
-    return parent.appendChild(document.createElement(tag))
-};
+function newEl(tag, parent) {
+    return parent.appendChild(document.createElement(tag));
+}
 const root = document.querySelector('#root');
 
 function addBookModal (library, callback) {
@@ -10,14 +10,27 @@ function addBookModal (library, callback) {
     container.classList.add('addBookModal');
 
     //The repetition below is me not wanting to create a mini-framework
+
+    // Close Button
+    const closeButton = newEl('button', container);
+    closeButton.textContent = 'X'
+    closeButton.classList.add('closeModal');
+    closeButton.addEventListener('click', e => {
+        callback();
+        root.removeChild(container);
+    });
+
+    // Title Input
     const titleLabel = newEl('label', container);
     titleLabel.textContent = "Title:"
     titleLabel.setAttribute('for', 'titleInput');
     
     const titleInput = newEl('input', container);
     titleInput.name = 'title';
-    titleInput.id = 'titleInput';    
+    titleInput.id = 'titleInput';
+    titleInput.required = true;
 
+    // Author Input
     const authorLabel = newEl('label', container);
     authorLabel.textContent = "Author:";
     authorLabel.setAttribute('for', 'authorInput');
@@ -26,6 +39,7 @@ function addBookModal (library, callback) {
     authorInput.name = 'author';
     authorInput.id = 'authorInput';
 
+    // Pages Input
     const pagesLabel = newEl('label', container);
     pagesLabel.textContent = 'Total of pages:';
     pagesLabel.setAttribute('for', 'pagesInput');
@@ -33,7 +47,9 @@ function addBookModal (library, callback) {
     const pagesInput = newEl('input', container);
     pagesInput.name = 'pages';
     pagesInput.id = 'pagesInput';
+    pagesInput.setAttribute('type', 'number');
 
+    // Has Read Input
     const hasReadArea = newEl ('div', container);
 
     const hasReadInput = newEl ('input', hasReadArea);
@@ -46,17 +62,37 @@ function addBookModal (library, callback) {
     hasReadLabel.textContent = 'Have you read it?';
     hasReadLabel.setAttribute('for', 'hasReadInput');
 
+    // Submit Book Input
     const submitBookButton = newEl('button', container);
     submitBookButton.textContent = "Add New Book";
     submitBookButton.id = 'submitBookButton';
-    submitBookButton.addEventListener('click', e => {
+    submitBookButton.addEventListener('click', e => 
+    {
+        if (titleInput.value === '' || titleInput.value === 'Title Required!!') {
+            titleInput.value = 'Title Required!!';
+            return;
+        }
+
+        if (authorInput.value === '' || authorInput.value === 'Author Required!!') 
+        {
+            authorInput.value = 'Author Required!!';
+            return;
+        }
+        
+        if (pagesInput.value === '' 
+            || pagesInput.value === 'Author Required!!'
+            || pagesInput.value <= 0)
+        {
+            pagesInput.value = 0;
+            return;
+        }
+
         const book = new Book (
             titleInput.value,
             authorInput.value,
             pagesInput.value,
             hasReadInput.checked
         )
-        p(hasReadInput.checked)
         library.addBook(book);
         callback();        
         root.removeChild(container);
@@ -118,6 +154,7 @@ class Book {
         this.DOMreference = document.createElement('div');
         this.DOMreference.classList.add('book');
 
+        //The repetition below is me not wanting to create a mini-framework
         const title = document.createElement('div');
         const titleProperty = document.createElement('span');
         titleProperty.style.fontWeight = 'bold';
@@ -148,12 +185,11 @@ class Book {
     }
 }
 
-const theHobbit = new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false);
-const bob = new Book ('O Jogo de Tronos', 'G.R.R. Martin', 800, true);
-const dob = new Book ('O Alienista', 'Machado de Assis', 200, true);
-const cob = new Book ('Crônicas de Narnia', 'C.S. Lewis', 400, true);
+
 const myLibrary = new Library ();
-myLibrary.addBook(theHobbit);
-myLibrary.addBook(bob);
-myLibrary.addBook(dob);
-myLibrary.addBook(cob);
+[
+    new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false),
+    new Book ('O Jogo de Tronos', 'G.R.R. Martin', 800, true),
+    new Book ('O Alienista', 'Machado de Assis', 200, true),
+    new Book ('Crônicas de Narnia', 'C.S. Lewis', 400, true)
+].forEach(elem => myLibrary.addBook(elem))

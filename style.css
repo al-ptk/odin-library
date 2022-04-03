@@ -58,3 +58,10 @@ button#submitBookButton {
     bottom: 5%;
     right: 10%;
 }
+
+button.closeModal {
+    border-style: none;
+    width: fit-content;
+    background-color: inherit;
+    align-self: flex-end;
+}
