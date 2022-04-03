@@ -228,15 +228,20 @@ function addBookModal (library, callback) {
 
 function deleteModal () {
     const container = newEl ('div', root);
+    container.classList.add('deleteModal');
 
     const modalTitle = newEl ('h3', container);
     modalTitle.textContent = 'Are you sure you want to delete?';
+    modalTitle.style.gridRow = '1'
+    modalTitle.style.gridColumn = '1 / 3';
 
-    const buttonsContainer = newEl('div', container);
-    const cancelButton = newEl ('button', buttonsContainer);
+    const cancelButton = newEl ('button', container);
     cancelButton.textContent = "Never Mind";
-    const confirmButton = newEl ('button', buttonsContainer);
+    cancelButton.style.gridRow = '1 / 2';
+
+    const confirmButton = newEl ('button', container);
     confirmButton.textContent = "Yep! Delete it."
+    cancelButton.style.gridRow = '2 / 3';
 }
 
 

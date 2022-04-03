@@ -109,3 +109,18 @@ button.closeModal {
     background-color: inherit;
     align-self: flex-end;
 }
+
+.deleteModal {
+    position: fixed;
+    top: 35vh;
+    left: 15vw;
+    z-index: 10;
+    width: min(70vw, 300px);
+    height: min(30vh, 200px);
+    background-color: rgb(231, 224, 214);
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3fr 1fr;
+    gap: 10px;
+}
