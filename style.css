@@ -8,21 +8,37 @@
     font-size: 20px;
 }
 
-.library {
-    width: fit-content;
-    margin: 10px;
+body {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.library {
+    flex: 1;
+    max-width: 90vw;
+    margin: 10vh auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+    grid-auto-rows: 200px;
     gap: 10px;
-    background-color: antiquewhite;
 }
 
 .book {
-    height: 200px;
-    width: 150px;
-    margin: 5px;
-    flex: 1 0 auto;
-    box-shadow: 0 0 3px 0 rgba(0,0,0,.4);
+    background-color: rgb(202, 202, 202);
+    box-shadow: 0 0 8px 0 rgba(0,0,0,.5);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.book .thumbnail {
+    box-sizing: content-box;
+    --scale: 18px;
+    width: calc(6 * var(--scale));
+    height: calc(7 * var(--scale));
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,.2);
 }
 
 button.addBook {

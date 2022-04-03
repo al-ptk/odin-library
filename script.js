@@ -170,33 +170,42 @@ class Book {
         this.DOMreference.classList.add('book');
 
         //The repetition below is me not wanting to create a mini-framework
-        const title = document.createElement('div');
-        const titleProperty = document.createElement('span');
+
+        const thumbnail = newEl ('object', this.DOMreference);
+        thumbnail.classList.add('thumbnail');
+        thumbnail.setAttribute('type', 'image/svg+xml')
+        thumbnail.setAttribute('data', './book-pictogram.svg')
+
+        // thumbnail.style.fill = pickRandomColor();
+
+        const bookInfo = newEl ('div', this.DOMreference);
+
+        const title = newEl('p', bookInfo);
+        const titleProperty = newEl('span', title);
         titleProperty.style.fontWeight = 'bold';
         titleProperty.textContent = 'Title: ';
-        title.append(titleProperty);
-        const titleValue = document.createElement('span');
+        const titleValue = newEl('span', title);
         titleValue.textContent = this.title;
-        title.appendChild(titleValue);
-        this.DOMreference.appendChild(title);
 
-        const author = document.createElement('p');
-        const authorProperty = document.createElement('span');
+        const author = newEl('p', bookInfo);
+        const authorProperty = newEl('span', author);
         authorProperty.style.fontWeight = 'bold';
         authorProperty.textContent = 'Author: ';
-        author.append(authorProperty);
-        const authorValue = document.createElement('span');
+        const authorValue = newEl('span', author);
         authorValue.textContent = this.author;
-        author.appendChild(authorValue);
-        this.DOMreference.appendChild(author);
 
-        const pages = document.createElement('p');
+        const pages = newEl('p', bookInfo);
         pages.textContent = `Total pages: ${this.pages}`;
-        this.DOMreference.appendChild(pages);
 
-        const hasRead = document.createElement('p');
+        const hasRead = newEl('p', bookInfo);
         hasRead.textContent = this.getReadStatus();
-        this.DOMreference.appendChild(hasRead);
+
+
+        function pickRandomColor () {
+            const colorList = ['red', 'green', 'blue'];
+            const randomColor = colorList[Math.trunc(Math.random() * colorList.length)]
+            return randomColor;
+        }
     }
 }
 
