@@ -16,7 +16,7 @@ body {
 .library {
     flex: 1;
     max-width: 90vw;
-    margin: 10vh auto;
+    margin: 5vh auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, auto));
     grid-auto-rows: 200px;
@@ -24,21 +24,34 @@ body {
 }
 
 .book {
+    position: relative;
     background-color: rgb(202, 202, 202);
     box-shadow: 0 0 8px 0 rgba(0,0,0,.5);
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     padding: 20px;
+    padding-left: 10px;
 }
 
 .book .thumbnail {
     box-sizing: content-box;
     --scale: 18px;
-    width: calc(6 * var(--scale));
+    width: calc(5 * var(--scale));
     height: calc(7 * var(--scale));
     padding: 10px;
     border: 1px solid rgba(0,0,0,.2);
+}
+
+.bookInfo .hasReadButton {
+    width: 10ch;
+    height: 1.2rem;
+    border-style: none;
+    background-color: rgb(145, 233, 145);
+}
+
+.hasReadButton.unread {
+    background-color: rgb(217, 233, 145);
 }
 
 button.addBook {
@@ -47,6 +60,7 @@ button.addBook {
     right: 10%;
     height: 42px;
     width: 10ch;
+    z-index: 10;
 }
 
 .addBookModal {

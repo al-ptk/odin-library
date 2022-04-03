@@ -20,6 +20,110 @@ function newEl(tag, parent) {
     return parent.appendChild(document.createElement(tag));
 }  
 
+class Library {
+    constructor () {
+        this.booklist = [];
+        this.buildLibraryWidget();
+    }
+
+    buildLibraryWidget () {
+        this.DOMreferece = document.createElement('div');
+        this.DOMreferece.classList.add('library');
+
+        const addButton = newEl('button', this.DOMreferece);
+        addButton.classList.add('addBook');
+        addButton.textContent = 'Add Book';
+        addButton.addEventListener('click', (e) => {
+            e.target.style.display = 'none';
+            const showButton = () => e.target.style.display = 'block';
+            addBookModal (this, showButton);
+        });
+
+        root.appendChild(this.DOMreferece);
+    }
+
+    addBook (book) {
+        this.booklist.push(book);
+        this.DOMreferece.appendChild(book.DOMreference);
+    }
+    
+    getBooklist () {
+        return this.booklist;
+    }
+}
+
+class Book {
+    constructor (title, author, pages, hasRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.hasRead = hasRead;
+        this.buildBookWidget();
+    }
+
+    getReadStatus () {
+        return this.hasRead
+            ? 'Done'
+            : 'To Read';
+    }
+
+    info () {
+        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.getReadStatus()}.`
+    }
+
+    buildBookWidget () {
+        this.DOMreference = document.createElement('div');
+        this.DOMreference.classList.add('book');
+
+        //The repetition below is me not wanting to create a mini-framework
+
+        const thumbnail = newEl ('object', this.DOMreference);
+        thumbnail.classList.add('thumbnail');
+        thumbnail.setAttribute('type', 'image/svg+xml')
+        thumbnail.setAttribute('data', './book-pictogram.svg')
+
+        // thumbnail.style.fill = pickRandomColor();
+
+        const bookInfo = newEl ('div', this.DOMreference);
+        bookInfo.classList.add('bookInfo');
+
+        const title = newEl('p', bookInfo);
+        const titleProperty = newEl('span', title);
+        titleProperty.style.fontWeight = 'bold';
+        titleProperty.textContent = 'Title: ';
+        const titleValue = newEl('span', title);
+        titleValue.textContent = this.title;
+
+        const author = newEl('p', bookInfo);
+        const authorProperty = newEl('span', author);
+        authorProperty.style.fontWeight = 'bold';
+        authorProperty.textContent = 'Author: ';
+        const authorValue = newEl('span', author);
+        authorValue.textContent = this.author;
+
+        const pages = newEl('p', bookInfo);
+        const pagesProperty = newEl('span', pages)
+        pagesProperty.style.fontWeight = 'bold';
+        pagesProperty.textContent = 'Pages: ';
+        const pagesValue = newEl('span', pages);
+        pagesValue.textContent = this.pages;
+
+        const hasRead = newEl ('p', bookInfo)
+        const hasReadProperty = newEl('span', hasRead);
+        hasReadProperty.style.fontWeight = 'bold';
+        hasReadProperty.textContent = 'Status: ';
+        const hasReadButton = newEl('button', hasRead);
+        hasReadButton.classList.add('hasReadButton');
+        if (!this.hasRead) hasReadButton.classList.add('unread');
+        hasReadButton.textContent = this.getReadStatus();
+        hasReadButton.addEventListener('click', (e) => {
+            this.hasRead = !this.hasRead;
+            e.target.classList.toggle('unread');
+            e.target.textContent = this.getReadStatus();
+        })
+    }
+}
+
 function addBookModal (library, callback) {
     const container = newEl ('div', root);
     container.classList.add('addBookModal');
@@ -114,99 +218,8 @@ function addBookModal (library, callback) {
     });
 };
 
-class Library {
-    constructor () {
-        this.booklist = [];
-        this.buildLibraryWidget();
-    }
+function deleteModal () {
 
-    buildLibraryWidget () {
-        this.DOMreferece = document.createElement('div');
-        this.DOMreferece.classList.add('library');
-
-        const addButton = newEl('button', this.DOMreferece);
-        addButton.classList.add('addBook');
-        addButton.textContent = 'Add Book';
-        addButton.addEventListener('click', (e) => {
-            e.target.style.display = 'none';
-            const showButton = () => e.target.style.display = 'block';
-            addBookModal (this, showButton);
-        });
-
-        root.appendChild(this.DOMreferece);
-    }
-
-    addBook (book) {
-        this.booklist.push(book);
-        this.DOMreferece.appendChild(book.DOMreference);
-    }
-    
-    getBooklist () {
-        return this.booklist;
-    }
-}
-
-class Book {
-    constructor (title, author, pages, hasRead) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.hasRead = hasRead;
-        this.buildBookWidget();
-    }
-
-    getReadStatus () {
-        return this.hasRead
-            ? 'already read'
-            : 'not read yet';
-    }
-
-    info () {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.getReadStatus()}.`
-    }
-
-    buildBookWidget () {
-        this.DOMreference = document.createElement('div');
-        this.DOMreference.classList.add('book');
-
-        //The repetition below is me not wanting to create a mini-framework
-
-        const thumbnail = newEl ('object', this.DOMreference);
-        thumbnail.classList.add('thumbnail');
-        thumbnail.setAttribute('type', 'image/svg+xml')
-        thumbnail.setAttribute('data', './book-pictogram.svg')
-
-        // thumbnail.style.fill = pickRandomColor();
-
-        const bookInfo = newEl ('div', this.DOMreference);
-
-        const title = newEl('p', bookInfo);
-        const titleProperty = newEl('span', title);
-        titleProperty.style.fontWeight = 'bold';
-        titleProperty.textContent = 'Title: ';
-        const titleValue = newEl('span', title);
-        titleValue.textContent = this.title;
-
-        const author = newEl('p', bookInfo);
-        const authorProperty = newEl('span', author);
-        authorProperty.style.fontWeight = 'bold';
-        authorProperty.textContent = 'Author: ';
-        const authorValue = newEl('span', author);
-        authorValue.textContent = this.author;
-
-        const pages = newEl('p', bookInfo);
-        pages.textContent = `Total pages: ${this.pages}`;
-
-        const hasRead = newEl('p', bookInfo);
-        hasRead.textContent = this.getReadStatus();
-
-
-        function pickRandomColor () {
-            const colorList = ['red', 'green', 'blue'];
-            const randomColor = colorList[Math.trunc(Math.random() * colorList.length)]
-            return randomColor;
-        }
-    }
 }
 
 Main();
