@@ -227,12 +227,21 @@ function addBookModal (library, callback) {
 };
 
 function deleteModal () {
+    const container = newEl ('div', root);
 
+    const modalTitle = newEl ('h3', container);
+    modalTitle.textContent = 'Are you sure you want to delete?';
+
+    const buttonsContainer = newEl('div', container);
+    const cancelButton = newEl ('button', buttonsContainer);
+    cancelButton.textContent = "Never Mind";
+    const confirmButton = newEl ('button', buttonsContainer);
+    confirmButton.textContent = "Yep! Delete it."
 }
 
 
-
 var root = document.querySelector('#root');
+deleteModal ();
 const myLibrary = new Library ();
 [
     new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false),
