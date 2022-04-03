@@ -92,7 +92,8 @@ class Book {
         deleteButton.textContent = 'X';
         deleteButton.classList.add('deleteButton');
         deleteButton.addEventListener ('click', e => {
-            this.parent.removeBook(this.bookId);
+            const selfDelete = () => this.parent.removeBook(this.bookId);
+            deleteModal (this.parent, selfDelete);
         })
 
         const title = newEl('p', bookInfo);
@@ -226,7 +227,7 @@ function addBookModal (library, callback) {
     });
 };
 
-function deleteModal () {
+function deleteModal (library, callback) {
     const container = newEl ('div', root);
     container.classList.add('deleteModal');
 
@@ -237,16 +238,21 @@ function deleteModal () {
 
     const cancelButton = newEl ('button', container);
     cancelButton.textContent = "Never Mind";
-    cancelButton.style.gridRow = '1 / 2';
+    cancelButton.style.gridRow = '2 / 3';
+    cancelButton.addEventListener('click', e => {
+        root.removeChild(container)
+    })
 
     const confirmButton = newEl ('button', container);
     confirmButton.textContent = "Yep! Delete it."
-    cancelButton.style.gridRow = '2 / 3';
+    confirmButton.addEventListener ('click', e => {
+        callback()
+        root.removeChild(container)
+    })
 }
 
 
 var root = document.querySelector('#root');
-deleteModal ();
 const myLibrary = new Library ();
 [
     new Book ('O Hobbit', 'J.R.R. Tolkien', 295, false),
