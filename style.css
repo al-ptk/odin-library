@@ -54,6 +54,20 @@ body {
     background-color: rgb(217, 233, 145);
 }
 
+.bookInfo .deleteButton {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgb(180, 179, 179);
+    border: 1px solid;
+    --size: 1.2rem;
+    font-size: var(--size);
+    height: calc(var(--size) + 5px);
+    width: calc(var(--size) + 5px);
+    border-radius: 50%;
+}
+
 button.addBook {
     position: fixed;
     top: 90%;
